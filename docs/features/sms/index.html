@@ -858,7 +858,7 @@
 
 
 <h1 id="sms">SMS</h1>
-<p><strong>Last verified:</strong> 2026-04-24</p>
+<p><strong>Last verified:</strong> 2026-05-13</p>
 <blockquote>
 <p>SMS is <strong>FOSS-only</strong> and <strong>Android-only</strong>. The Play Store variant of Kai does not declare <code>READ_SMS</code> or <code>SEND_SMS</code> and the feature is invisible there — no settings, no tools, no code path. Play Store's SMS/Call Log Permissions policy restricts both permissions to default SMS handlers, which Kai is not.</p>
 </blockquote>
@@ -867,7 +867,7 @@
 <ul>
 <li><strong>FOSS Android build</strong>: fully available. Read and Send are separate opt-ins.</li>
 <li><strong>Play Store Android build</strong>: feature is invisible — neither <code>READ_SMS</code> nor <code>SEND_SMS</code> is declared in the Play flavor's merged manifest, the runtime support check returns false, the settings section is hidden, and the SMS tools are never registered.</li>
-<li><strong>iOS / desktop / web</strong>: unsupported. No-op stubs.</li>
+<li><strong>Desktop / web</strong>: unsupported. No-op stubs.</li>
 </ul>
 <p>The FOSS gate is purely manifest-based: the <code>foss</code> product flavor contributes <code>androidApp/src/foss/AndroidManifest.xml</code> declaring both <code>READ_SMS</code> and <code>SEND_SMS</code>, while the <code>playStore</code> flavor does not. At runtime the app queries <code>PackageManager.getPackageInfo(…, GET_PERMISSIONS).requestedPermissions</code> to decide whether to show the feature.</p>
 <h2 id="scope">Scope</h2>

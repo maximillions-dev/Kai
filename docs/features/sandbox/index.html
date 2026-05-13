@@ -847,9 +847,9 @@
 
 
 <h1 id="linux-sandbox">Linux Sandbox</h1>
-<p><strong>Last verified:</strong> 2026-05-06</p>
+<p><strong>Last verified:</strong> 2026-05-13</p>
 <p>Kai ships a self-contained Alpine Linux environment on Android so the assistant — and the user, via the in-app Terminal — can run real shell commands. The agent can install packages, write and run scripts, hit the network, and reach external servers over SSH/SFTP/FTP. The sandbox runs the user-space <code>proot</code> runtime against an Alpine 3.21 minirootfs extracted into the app's private storage; no root or system access is required.</p>
-<p>The sandbox is <strong>Android-only</strong>. iOS, desktop, and web stubs return "not ready" for every operation.</p>
+<p>The sandbox is <strong>Android-only</strong>. Desktop and web stubs return "not ready" for every operation.</p>
 <h2 id="concepts">Concepts</h2>
 <h3 id="per-conversation-shell-sessions">Per-conversation shell sessions</h3>
 <p>Each chat conversation gets its own long-running <code>bash</code> process. The agent's shell tool routes through the conversation's shell, so working directory, exported environment variables, and any in-shell state carry from one tool call to the next within that chat — the way they do in any normal terminal. State does <strong>not</strong> leak across chats: <code>cd /tmp</code> in conversation A leaves conversation B sitting wherever it was. The in-app Terminal tab also has its own dedicated scratch shell, separate from any chat.</p>
@@ -889,7 +889,7 @@
 <li><strong>Memory cost of multiple sessions.</strong> Each live shell is a <code>proot+bash</code> pair (tens of MB resident). Running many concurrent chats with shell-tool usage will accumulate sessions. There is no soft cap yet — closing a conversation drops its shell, sandbox reset drops them all.</li>
 <li><strong>Cancel without a PTY is best-effort.</strong> A child that ignores <code>SIGINT</code>/<code>SIGTERM</code> forces a session reset; the user loses session state for that one command.</li>
 <li><strong>Stray output from backgrounded jobs</strong> (<code>sleep 60 &amp;</code> then "Done" later) can attach itself to whatever command is running when the kernel finally reports the exit. Matches normal terminal behavior.</li>
-<li><strong>iOS / desktop / web</strong>: no sandbox. Calls return "not ready" until those platforms get their own runtime.</li>
+<li><strong>Desktop / web</strong>: no sandbox. Calls return "not ready" until those platforms get their own runtime.</li>
 </ul>
 <h2 id="key-files">Key Files</h2>
 <table>
@@ -953,7 +953,7 @@
 <td>Visible terminal UI with command echo, color-coded streams, and an interactive input row.</td>
 </tr>
 <tr>
-<td><code>composeApp/src/iosMain/kotlin/com/inspiredandroid/kai/SandboxController.ios.kt</code>, <code>desktopMain/.../SandboxController.jvm.kt</code>, <code>wasmJsMain/.../SandboxController.wasmJs.kt</code></td>
+<td><code>composeApp/src/desktopMain/.../SandboxController.jvm.kt</code>, <code>wasmJsMain/.../SandboxController.wasmJs.kt</code></td>
 <td>NoOp stubs for non-Android platforms.</td>
 </tr>
 </tbody>

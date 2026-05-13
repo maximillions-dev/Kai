@@ -1001,7 +1001,7 @@
 
 
 <h1 id="splinterlands-auto-battle">Splinterlands Auto-Battle</h1>
-<p>Last verified: 2026-04-24</p>
+<p>Last verified: 2026-05-13</p>
 <h2 id="overview">Overview</h2>
 <p>Kai can automatically play Wild Ranked Splinterlands battles. The feature uses one or more LLM services to pick teams based on match constraints (mana cap, rulesets, inactive splinters), submits them via the Hive blockchain, and plays continuously until the player hits Stop or runs out of energy.</p>
 <h2 id="configuration">Configuration</h2>
@@ -1082,7 +1082,7 @@
 <h2 id="platform-support">Platform Support</h2>
 <ul>
 <li><strong>Desktop (JVM)</strong> and <strong>Android</strong>: Full support via BouncyCastle secp256k1. Signing uses RFC 6979 deterministic k with y-parity based recovery ID computation. Transaction signing uses single SHA-256 of (chain_id + serialized tx), following the Hive/Graphene signing protocol.</li>
-<li><strong>iOS</strong> and <strong>Web</strong>: Hidden (<code>isSplinterlandsSupported = false</code>)</li>
+<li><strong>Web</strong>: Hidden (<code>isSplinterlandsSupported = false</code>)</li>
 </ul>
 <h2 id="key-files">Key Files</h2>
 <table>
@@ -1124,10 +1124,6 @@
 <tr>
 <td><code>splinterlands/HiveCrypto.android.kt</code></td>
 <td>BouncyCastle secp256k1 ECDSA (Android)</td>
-</tr>
-<tr>
-<td><code>splinterlands/HiveCrypto.ios.kt</code></td>
-<td>Stub/unsupported implementation (iOS)</td>
 </tr>
 <tr>
 <td><code>splinterlands/HiveCrypto.wasmJs.kt</code></td>

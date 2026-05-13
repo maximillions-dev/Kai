@@ -863,7 +863,7 @@
 
 
 <h1 id="notifications">Notifications</h1>
-<p><strong>Last verified:</strong> 2026-04-28 (per-app filtering delegated to system Notification Access "Apps" picker)</p>
+<p><strong>Last verified:</strong> 2026-05-13</p>
 <blockquote>
 <p>Reading notifications is <strong>FOSS-only</strong> and <strong>Android-only</strong>. The Play Store variant of Kai does not declare <code>BIND_NOTIFICATION_LISTENER_SERVICE</code> and the feature is invisible there — no settings, no tools, no code path. Play Store's notification-access policies restrict the listener to a narrow set of approved use cases (accessibility, smartwatches, replacement notification UIs), which Kai is not.</p>
 </blockquote>
@@ -873,7 +873,7 @@
 <ul>
 <li><strong>FOSS Android build</strong>: fully available.</li>
 <li><strong>Play Store Android build</strong>: feature is invisible — <code>BIND_NOTIFICATION_LISTENER_SERVICE</code> is not declared in the Play flavor's merged manifest, the runtime support check returns false, the settings section is hidden, and the notification tools are never registered.</li>
-<li><strong>iOS / desktop / web</strong>: unsupported. iOS does not allow third-party apps to read system notifications at all; desktop and web have no equivalent surface. No-op stubs.</li>
+<li><strong>Desktop / web</strong>: unsupported. No-op stubs.</li>
 </ul>
 <p>The FOSS gate is purely manifest-based: the <code>foss</code> product flavor contributes <code>androidApp/src/foss/AndroidManifest.xml</code> declaring the listener service with <code>BIND_NOTIFICATION_LISTENER_SERVICE</code>, while the <code>playStore</code> flavor does not. At runtime the app queries <code>PackageManager.getPackageInfo(…, GET_SERVICES)</code> (or checks the merged-manifest service registration) to decide whether to show the feature.</p>
 <h2 id="scope">Scope</h2>

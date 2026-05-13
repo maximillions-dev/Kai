@@ -690,17 +690,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        iOS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#desktop-macos-windows-linux" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -882,17 +871,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#ios" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        iOS
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#desktop-macos-windows-linux" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -959,7 +937,7 @@
 
 
 <h1 id="encryption-secure-storage">Encryption &amp; Secure Storage</h1>
-<p><strong>Last verified:</strong> 2026-04-24</p>
+<p><strong>Last verified:</strong> 2026-05-13</p>
 <p>All sensitive data (API keys, email passwords, conversation history) is stored through a platform-specific <code>Settings</code> implementation selected by <code>createSecureSettings()</code>. Each platform uses the strongest available mechanism.</p>
 <h2 id="sensitive-data">Sensitive Data</h2>
 <p>The following data is stored in secure settings:
@@ -976,14 +954,6 @@
 <li><strong>Key management:</strong> Android Keystore (<code>MasterKey</code> with <code>AES256_GCM</code> scheme)</li>
 <li><strong>Size limit:</strong> ~2 MB per value (SharedPreferences limit)</li>
 <li><strong>File location:</strong> App-private <code>kai_secure_prefs</code> SharedPreferences</li>
-</ul>
-<h3 id="ios">iOS</h3>
-<ul>
-<li><strong>Mechanism:</strong> <code>KeychainSettings</code> (<code>com.russhwolf/multiplatform-settings</code>)</li>
-<li><strong>Encryption:</strong> Hardware-backed Keychain encryption (AES-256-GCM via Secure Enclave on supported devices)</li>
-<li><strong>Key management:</strong> Managed by iOS Keychain Services</li>
-<li><strong>Size limit:</strong> Effectively unlimited</li>
-<li><strong>Service identifier:</strong> <code>com.inspiredandroid.kai</code></li>
 </ul>
 <h3 id="desktop-macos-windows-linux">Desktop (macOS, Windows, Linux)</h3>
 <ul>
@@ -1028,10 +998,6 @@
 <tr>
 <td><code>composeApp/src/androidMain/.../Platform.android.kt</code></td>
 <td>Android EncryptedSharedPreferences setup</td>
-</tr>
-<tr>
-<td><code>composeApp/src/iosMain/.../Platform.ios.kt</code></td>
-<td>iOS KeychainSettings setup</td>
 </tr>
 <tr>
 <td><code>composeApp/src/desktopMain/.../Platform.jvm.kt</code></td>
