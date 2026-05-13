@@ -36,44 +36,29 @@ jobs:
             echo "is_fork=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
+      - name: Setup build environment
+        uses: ./.github/actions/setup
         with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+          setup-android: 'true'
 
       - name: Verify Java version
         run: |
           echo "JAVA_HOME: $JAVA_HOME"
           java -version
 
+      - name: Run spotlessCheck
+        run: ./gradlew spotlessCheck --no-daemon --stacktrace
+
       - name: Run spotlessApply
         run: ./gradlew spotlessApply --no-daemon --stacktrace
 
+      - name: Verify screenshots
+        id: verify-screenshots
+        continue-on-error: true
+        run: ./gradlew :screenshotTests:verifyPaparazziDebug --no-daemon --stacktrace
+
       - name: Run updateScreenshots
         run: ./gradlew :screenshotTests:updateScreenshots --no-daemon --stacktrace
-
-      - name: Install cwebp
-        run: sudo apt-get update && sudo apt-get install -y webp
-
-      - name: Convert site images to WebP
-        run: ./scripts/convert-site-images-to-webp.sh
 
       - name: Run desktop tests
         run: ./gradlew :composeApp:desktopTest --no-daemon --stacktrace
@@ -89,14 +74,13 @@ jobs:
 
       - name: Fail if fork PR has changes
         if: |
-          steps.changes.outputs.has_changes == 'true' &&
+          (steps.changes.outputs.has_changes == 'true' || steps.verify-screenshots.outcome == 'failure') &&
           steps.fork-check.outputs.is_fork == 'true'
         run: |
           echo "::error::This PR from a fork requires formatting or screenshot updates."
           echo "Please run the following commands locally and push the changes:"
           echo "  ./gradlew spotlessApply"
           echo "  ./gradlew :screenshotTests:updateScreenshots"
-          echo "  ./scripts/convert-site-images-to-webp.sh"
           exit 1
 
       - name: Commit and push changes

@@ -18,19 +18,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
+      - name: Setup build environment
+        uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-      - name: Install Android Build Tools
-        run: |
-          sdkmanager "build-tools;36.0.0"
-          sdkmanager "build-tools;29.0.3"
+          setup-android: 'true'
+          install-build-tools: 'true'
       - name: Build Debug APK
         run: bash ./gradlew :androidApp:assembleDebug --stacktrace
       - name: Upload APK

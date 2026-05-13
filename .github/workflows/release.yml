@@ -18,19 +18,11 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
+      - name: Setup build environment
+        uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-      - name: Install Android Build Tools
-        run: |
-          sdkmanager "build-tools;36.0.0"
-          sdkmanager "build-tools;29.0.3"
+          setup-android: 'true'
+          install-build-tools: 'true'
       - name: Build APK
         run: bash ./gradlew :androidApp:assembleRelease --stacktrace
       - name: Sign APK
@@ -56,13 +48,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Build DMG
         run: bash ./gradlew packageReleaseDmg --stacktrace
       - name: Upload DMG Artifact
@@ -80,11 +67,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Build MSI
         run: ./gradlew packageReleaseMsi --stacktrace
       - name: Upload MSI Artifact
@@ -102,13 +86,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Build DEB
         run: ./gradlew packageReleaseDeb --stacktrace
       - name: Upload DEB Artifact
@@ -126,13 +105,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Install RPM build tools
         run: sudo apt-get update && sudo apt-get install -y rpm
       - name: Build RPM
@@ -152,13 +126,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Build application distribution
         run: ./gradlew createReleaseDistributable --stacktrace
       - name: Create tarball
@@ -180,13 +149,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
+      - name: Setup build environment
+        uses: ./.github/actions/setup
       - name: Install AppImage tools
         run: |
           sudo apt-get update
@@ -252,7 +216,7 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
       - name: Download Linux Tarball
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: linux-tar-package
       - name: Install Flatpak and Builder
@@ -290,15 +254,10 @@ jobs:
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
-      - name: Setup JDK
-        uses: actions/setup-java@v4
+      - name: Setup build environment
+        uses: ./.github/actions/setup
         with:
-          distribution: temurin
-          java-version: "21"
-      - name: Set execution flag for gradlew
-        run: chmod +x gradlew
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+          setup-android: 'true'
       - name: Decode Play Store keystore
         run: echo "${{ secrets.PLAY_STORE_KEYSTORE_B64 }}" | base64 --decode > /tmp/keystore.jks
       - name: Decode Play Store service account key
@@ -329,42 +288,42 @@ jobs:
           fetch-depth: 0
 
       - name: Download APK Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: signed-apk
 
       - name: Download DMG Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: dmg-package
 
       - name: Download MSI Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: msi-package
 
       - name: Download DEB Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: deb-package
 
       - name: Download RPM Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: rpm-package
 
       - name: Download AppImage Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: appimage-package
 
       - name: Download Linux Tarball Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: linux-tar-package
 
       - name: Download Flatpak Artifact
-        uses: actions/download-artifact@v4.1.7
+        uses: actions/download-artifact@v4
         with:
           name: flatpak-package
 
