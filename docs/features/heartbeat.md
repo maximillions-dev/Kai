@@ -1,6 +1,6 @@
 # Heartbeat
 
-**Last verified:** 2026-04-26
+**Last verified:** 2026-05-13
 
 > Heartbeat is user-controlled (on/off toggle, interval, active hours live in the settings UI). The AI cannot enable, disable, or reschedule it. To customise *what happens on each heartbeat*, the AI creates heartbeat-triggered scheduled tasks via `schedule_task` with `on_heartbeat: true` — these are `HEARTBEAT`-trigger tasks (see [tasks.md](tasks.md)) and their prompts are appended to every heartbeat run under `## Heartbeat Additions`. Each addition is a first-class task the user can see, edit, and cancel.
 
@@ -47,7 +47,7 @@ UI validation rules:
 - If the AI response contains "HEARTBEAT_OK", nothing is shown to the user
 - Any other response is saved into a dedicated heartbeat conversation (type `heartbeat`) via `addAssistantMessage`
 - A dismissable banner appears at the top of the chat when the heartbeat has something to report
-- **Android push notification**: when the heartbeat produces a non-OK report *and* the app is not currently in the foreground, a push notification fires. Foreground state is tracked via `ProcessLifecycleOwner` in `KaiApplication` and mirrored to `TaskScheduler.appInForeground`. Tapping the notification launches/foregrounds the app and deep-links into the heartbeat conversation via the `EXTRA_OPEN_HEARTBEAT` intent extra; `ChatViewModel` consumes the signal through `DataRepository.openHeartbeatRequested` and calls `loadConversation` on the heartbeat conversation id. The notification uses a fixed id so a fresh report replaces the previous unread one instead of stacking. Desktop/iOS/web no-op (banner-only).
+- **Android push notification**: when the heartbeat produces a non-OK report *and* the app is not currently in the foreground, a push notification fires. Foreground state is tracked via `ProcessLifecycleOwner` in `KaiApplication` and mirrored to `TaskScheduler.appInForeground`. Tapping the notification launches/foregrounds the app and deep-links into the heartbeat conversation via the `EXTRA_OPEN_HEARTBEAT` intent extra; `ChatViewModel` consumes the signal through `DataRepository.openHeartbeatRequested` and calls `loadConversation` on the heartbeat conversation id. The notification uses a fixed id so a fresh report replaces the previous unread one instead of stacking. Desktop/web no-op (banner-only).
 - Tapping the banner loads the heartbeat conversation so the user can read the report and reply
 - The X button dismisses the banner without navigating
 - Heartbeat conversations are included in the chat history list with a "Heartbeat" label badge, and can also be accessed via the banner

@@ -1,6 +1,6 @@
 # Kai
 
-An **open-source AI assistant with persistent memory** that runs on **Android, iOS, Windows, Mac, Linux, and Web**.
+An **open-source AI assistant with persistent memory** that runs on **Android, Windows, Mac, Linux, and Web**.
 
 [:material-download: Get Started](getting-started.md){ .md-button .md-button--primary }
 [:material-github: GitHub](https://github.com/SimonSchubert/Kai){ .md-button }
@@ -95,7 +95,6 @@ Plus a built-in **Free** tier that requires no API key.
 | Platform | Distribution |
 |---|---|
 | Android | Google Play, F-Droid, APK |
-| iOS | App Store |
 | macOS | Homebrew, DMG |
 | Windows | MSI |
 | Linux | DEB, RPM, AppImage, AUR |

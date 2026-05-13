@@ -1,6 +1,6 @@
 # Splinterlands Auto-Battle
 
-Last verified: 2026-04-24
+Last verified: 2026-05-13
 
 ## Overview
 
@@ -94,7 +94,7 @@ Recent Battles log shows up to 500 entries (5 visible by default, expandable): V
 ## Platform Support
 
 - **Desktop (JVM)** and **Android**: Full support via BouncyCastle secp256k1. Signing uses RFC 6979 deterministic k with y-parity based recovery ID computation. Transaction signing uses single SHA-256 of (chain_id + serialized tx), following the Hive/Graphene signing protocol.
-- **iOS** and **Web**: Hidden (`isSplinterlandsSupported = false`)
+- **Web**: Hidden (`isSplinterlandsSupported = false`)
 
 ## Key Files
 
@@ -108,7 +108,6 @@ Recent Battles log shows up to 500 entries (5 visible by default, expandable): V
 | `splinterlands/HiveCrypto.kt` | Expect declarations for Hive signing |
 | `splinterlands/HiveCrypto.jvm.kt` | BouncyCastle secp256k1 ECDSA (Desktop) |
 | `splinterlands/HiveCrypto.android.kt` | BouncyCastle secp256k1 ECDSA (Android) |
-| `splinterlands/HiveCrypto.ios.kt` | Stub/unsupported implementation (iOS) |
 | `splinterlands/HiveCrypto.wasmJs.kt` | Stub/unsupported implementation (Web) |
 | `splinterlands/HiveCryptoTest.kt` | Signing + recovery round-trip tests (desktopTest) |
 | `data/AppSettings.kt` | Splinterlands key/value accessors including `splinterlands_instance_ids` JSON array |

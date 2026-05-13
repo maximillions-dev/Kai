@@ -1,6 +1,6 @@
 # Tools
 
-**Last verified:** 2026-04-27
+**Last verified:** 2026-05-13
 
 Kai's tools feature allows the AI to execute external functions during conversations — web search, notifications, calendar events, shell commands, memory operations, and more. Tools are defined with a schema, executed with safety guards, and managed through per-tool toggles in settings.
 
@@ -40,7 +40,6 @@ The `open_url` tool accepts both web URLs and `file://` URIs. Each platform open
 
 - **Android** — Uses `ACTION_VIEW` intents. For `file://` URIs, converts to `content://` via FileProvider with MIME type detection so the file opens in the appropriate app (e.g. `.html` files open in the browser).
 - **Desktop** — Uses `java.awt.Desktop.browse()`.
-- **iOS** — Uses `UIApplication.openURL()`.
 - **Web** — Uses `window.open()` with `_blank` target.
 
 ### Memory (always on)

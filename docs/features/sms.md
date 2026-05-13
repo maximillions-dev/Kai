@@ -1,6 +1,6 @@
 # SMS
 
-**Last verified:** 2026-04-24
+**Last verified:** 2026-05-13
 
 > SMS is **FOSS-only** and **Android-only**. The Play Store variant of Kai does not declare `READ_SMS` or `SEND_SMS` and the feature is invisible there — no settings, no tools, no code path. Play Store's SMS/Call Log Permissions policy restricts both permissions to default SMS handlers, which Kai is not.
 
@@ -10,7 +10,7 @@ Kai on the FOSS Android build can **read** incoming SMS messages and **draft** o
 
 - **FOSS Android build**: fully available. Read and Send are separate opt-ins.
 - **Play Store Android build**: feature is invisible — neither `READ_SMS` nor `SEND_SMS` is declared in the Play flavor's merged manifest, the runtime support check returns false, the settings section is hidden, and the SMS tools are never registered.
-- **iOS / desktop / web**: unsupported. No-op stubs.
+- **Desktop / web**: unsupported. No-op stubs.
 
 The FOSS gate is purely manifest-based: the `foss` product flavor contributes `androidApp/src/foss/AndroidManifest.xml` declaring both `READ_SMS` and `SEND_SMS`, while the `playStore` flavor does not. At runtime the app queries `PackageManager.getPackageInfo(…, GET_PERMISSIONS).requestedPermissions` to decide whether to show the feature.
 

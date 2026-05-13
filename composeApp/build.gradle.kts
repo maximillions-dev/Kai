@@ -30,18 +30,6 @@ kotlin {
         }
     }
 
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64(),
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "ComposeApp"
-            isStatic = true
-            binaryOption("bundleId", "com.beer.app")
-        }
-    }
-
     jvm("desktop")
 
     @OptIn(ExperimentalWasmDsl::class)
@@ -142,11 +130,6 @@ kotlin {
             implementation(libs.slf4j.nop)
             implementation(libs.litert.lm.jvm)
         }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-            implementation(libs.ktor.network)
-            implementation(libs.ktor.network.tls)
-        }
         wasmJsMain.dependencies {
             implementation(libs.ktor.client.js)
         }
@@ -227,19 +210,6 @@ class VersionGeneratorPlugin : Plugin<Project> {
                 }
                 """.trimIndent(),
             )
-
-            // Update iOS Config.xcconfig with version
-            val xcConfigFile = rootProject.file("iosApp/Configuration/Config.xcconfig")
-            if (xcConfigFile.exists()) {
-                val content = xcConfigFile.readText()
-                val updatedContent =
-                    if (content.contains("APP_VERSION=")) {
-                        content.replace(Regex("APP_VERSION=.*"), "APP_VERSION=$appVersion")
-                    } else {
-                        content.trimEnd() + "\nAPP_VERSION=$appVersion\n"
-                    }
-                xcConfigFile.writeText(updatedContent)
-            }
         }
     }
 }

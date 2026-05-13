@@ -1,10 +1,10 @@
 # Linux Sandbox
 
-**Last verified:** 2026-05-06
+**Last verified:** 2026-05-13
 
 Kai ships a self-contained Alpine Linux environment on Android so the assistant — and the user, via the in-app Terminal — can run real shell commands. The agent can install packages, write and run scripts, hit the network, and reach external servers over SSH/SFTP/FTP. The sandbox runs the user-space `proot` runtime against an Alpine 3.21 minirootfs extracted into the app's private storage; no root or system access is required.
 
-The sandbox is **Android-only**. iOS, desktop, and web stubs return "not ready" for every operation.
+The sandbox is **Android-only**. Desktop and web stubs return "not ready" for every operation.
 
 ## Concepts
 
@@ -66,7 +66,7 @@ The shell session can break — the user types `exit`, a command crashes bash, t
 - **Memory cost of multiple sessions.** Each live shell is a `proot+bash` pair (tens of MB resident). Running many concurrent chats with shell-tool usage will accumulate sessions. There is no soft cap yet — closing a conversation drops its shell, sandbox reset drops them all.
 - **Cancel without a PTY is best-effort.** A child that ignores `SIGINT`/`SIGTERM` forces a session reset; the user loses session state for that one command.
 - **Stray output from backgrounded jobs** (`sleep 60 &` then "Done" later) can attach itself to whatever command is running when the kernel finally reports the exit. Matches normal terminal behavior.
-- **iOS / desktop / web**: no sandbox. Calls return "not ready" until those platforms get their own runtime.
+- **Desktop / web**: no sandbox. Calls return "not ready" until those platforms get their own runtime.
 
 ## Key Files
 
@@ -85,4 +85,4 @@ The shell session can break — the user types `exit`, a command crashes bash, t
 | `composeApp/src/androidMain/kotlin/com/inspiredandroid/kai/tools/ProcessManager.kt` / `ProcessManagerTool.kt` | Background-job lifecycle: detached one-shot proot, in-memory session table, status/kill controls. |
 | `composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/sandbox/SandboxSessionViewModel.kt` | Terminal-tab ViewModel: line buffer, run/cancel state, stream draining. |
 | `composeApp/src/commonMain/kotlin/com/inspiredandroid/kai/ui/settings/TerminalSheet.kt` | Visible terminal UI with command echo, color-coded streams, and an interactive input row. |
-| `composeApp/src/iosMain/kotlin/com/inspiredandroid/kai/SandboxController.ios.kt`, `desktopMain/.../SandboxController.jvm.kt`, `wasmJsMain/.../SandboxController.wasmJs.kt` | NoOp stubs for non-Android platforms. |
+| `composeApp/src/desktopMain/.../SandboxController.jvm.kt`, `wasmJsMain/.../SandboxController.wasmJs.kt` | NoOp stubs for non-Android platforms. |
